@@ -11,7 +11,8 @@
     @inertiaHead
 </head>
 
-<body class="bg-white dark:bg-gray-900">
+{{-- for dark mode --}}
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-300">
     @inertia
 </body>
 
