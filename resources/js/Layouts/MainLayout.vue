@@ -1,6 +1,6 @@
 <template>
   <!-- header line styling -->
-  <header class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 w-full">
+  <header class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 w-full">
 
     <div class="container mx-auto">
       <nav class="p-4 flex items-center justify-between">
@@ -13,7 +13,7 @@
         </div>
         <div>
           <Link :href="route('listing.create')"
-            class="bg bg-blue-600 hover:bg-blue-500 text-white font-medium p-2 rounded-md">+ New Listing</Link>
+            class="primary-btn">+ New Listing</Link>
         </div>
       </nav>
     </div>

@@ -1,8 +1,7 @@
 <template>
   <span>
     {{ listing.street }} {{ listing.street_nr }}, {{
-      listing.city }}, for ${{ listing.price }}
-  </span>
+      listing.city }}  </span>
 </template>
 
 <script setup>

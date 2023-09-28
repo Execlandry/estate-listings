@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .label{
+        @apply block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300
+        
+    }
+
+    .input{
+        @apply block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6
+       
+    }
+
+    .input-error{
+        @apply text-sm text-red-500 dark:text-red-400
+    }
+
+    .primary-btn{
+        @apply bg-blue-600 hover:bg-blue-500 text-white font-medium p-2 rounded-md
+    }
+
+    .secondary-btn{
+        @apply text-sm font-semibold leading-6 text-gray-900 dark:text-gray-300
+    }
+}
