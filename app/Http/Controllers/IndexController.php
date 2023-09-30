@@ -24,6 +24,7 @@ class IndexController extends Controller
 
         // dd(Auth::user());
 
+        
         return inertia(
             'Index/Index',
             [
