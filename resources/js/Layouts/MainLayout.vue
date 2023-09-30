@@ -11,15 +11,22 @@
           <Link :href="route('listing.index')">ESTATES</Link>
 
         </div>
-        <div>
-          <Link :href="route('listing.create')"
-            class="primary-btn">+ New Listing</Link>
+        <div v-if="user" class="flex items-center gap-4">
+          <div class="text-sm text-gray-500">{{ user.name }}</div>
+          <Link :href="route('listing.create')" class="primary-btn">+ New Listing</Link>
+          <div>
+            <Link :href="route('logout')" method="delete" as="button">Logout</Link>
+          </div>
+        </div>
+
+        <div v-else>
+          <Link :href="route('login')">Sign In</Link>
         </div>
       </nav>
     </div>
   </header>
 
-  <main class="container mx-auto p-4">
+  <main class="container mx-auto p-4 w-full">
     <div v-if="flashSuccess"
       class="mb-4 border rounded-md shadow-sm border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900 p-2">
       {{ flashSuccess }}
@@ -37,5 +44,7 @@ const page = usePage()
 const flashSuccess = computed(
   () => page.props.value.flash.success,
 )
+
+const user = computed(() => page.props.value.user)
 
 </script>
