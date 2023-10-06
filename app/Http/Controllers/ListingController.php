@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ListingController extends Controller
 {
+
+    // for policy default settings
+    public function __construct(){
+        $this->authorizeResource(Listing::class,'listing');
+    }
+    
     // public function __construct()
     // {
     //     $this->middleware('auth')->except(['index','show']);
@@ -34,6 +41,8 @@ class ListingController extends Controller
      */
     public function create()
     {
+        // $this->authorize('create',Listing::class);
+
         return inertia('Listing/Create');
     }
 
@@ -70,6 +79,13 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
+
+    //    if(Auth::user()->cannot('view',$listing)){
+    //     abort(403);
+    //    }
+    // more consise way of above statement
+    // $this->authorize('view',$listing);
+
         return inertia(
             'Listing/Show',
             [
