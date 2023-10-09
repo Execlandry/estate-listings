@@ -10,10 +10,11 @@ class ListingController extends Controller
 {
 
     // for policy default settings
-    public function __construct(){
-        $this->authorizeResource(Listing::class,'listing');
+    public function __construct()
+    {
+        $this->authorizeResource(Listing::class, 'listing');
     }
-    
+
     // public function __construct()
     // {
     //     $this->middleware('auth')->except(['index','show']);
@@ -24,13 +25,22 @@ class ListingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->only([
+            'priceFrom', 'priceTo', 'beds', 'baths', 'areaFrom', 'areaTo'
+        ]);
+
+        
         return inertia(
             'Listing/Index',
             [
-                'listings' => Listing::orderByDesc('created_at')
-                ->paginate(10) //returns a object
+
+                'filters' => $filters,
+                'listings' => Listing::mostRecent()
+                   ->filter($filters)
+                    ->paginate(10) //returns a object
+                    ->withQueryString() //carries url filters to next pages
             ]
         );
     }
@@ -81,11 +91,11 @@ class ListingController extends Controller
     public function show(Listing $listing)
     {
 
-    //    if(Auth::user()->cannot('view',$listing)){
-    //     abort(403);
-    //    }
-    // more consise way of above statement
-    // $this->authorize('view',$listing);
+        //    if(Auth::user()->cannot('view',$listing)){
+        //     abort(403);
+        //    }
+        // more consise way of above statement
+        // $this->authorize('view',$listing);
 
         return inertia(
             'Listing/Show',
