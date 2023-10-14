@@ -19,8 +19,8 @@
           </div>
         </div>
 
-        <div v-else class="flex items-center gap-2">
-          <Link :href="route('user-account.create')">Register</Link>
+        <div v-else class="flex items-center gap-2 ">
+          <Link class="primary-btn" :href="route('user-account.create')">Register</Link>
           <Link :href="route('login')">Sign In</Link>
         </div>
       </nav>

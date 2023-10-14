@@ -61,6 +61,7 @@ class ListingController extends Controller
         // more consise way of above statement
         // $this->authorize('view',$listing);
 
+        $listing->load(['images']);
         return inertia(
             'Listing/Show',
             [
