@@ -10,8 +10,9 @@ class ListingPolicy
 {
     use HandlesAuthorization;
 
-    public function before(?User $user, $ability){
-        if($user?->is_admin /*&& $ability == 'update' this allows admin to not delete anyother listing except his own*/){
+    public function before(?User $user, $ability)
+    {
+        if ($user?->is_admin /*&& $ability == 'update' this allows admin to not delete anyother listing except his own*/) {
             return true;
         }
     }
@@ -22,12 +23,11 @@ class ListingPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    
+
     public function viewAny(?User $user)
     //? before user lets an user to access page without authenticating
     {
         return true;
-        
     }
 
     /**
@@ -39,7 +39,11 @@ class ListingPolicy
      */
     public function view(?User $user, Listing $listing)
     {
-        return true;
+        if ($listing->by_user_id == $user?->id) {
+            return true;
+        }
+
+        return $listing->sold_at == null;
     }
 
     /**
@@ -64,8 +68,7 @@ class ListingPolicy
      */
     public function update(User $user, Listing $listing)
     {
-        return $user->id == $listing->by_user_id;
-        
+        return $listing->sold_at == null && ($user->id == $listing->by_user_id);
     }
 
     /**
@@ -78,8 +81,6 @@ class ListingPolicy
     public function delete(User $user, Listing $listing)
     {
         return $user->id == $listing->by_user_id;
-        
-        
     }
 
     /**
@@ -92,8 +93,8 @@ class ListingPolicy
     public function restore(User $user, Listing $listing)
     {
         return $user->id == $listing->by_user_id;
-//soft deletes
-        
+        //soft deletes
+
     }
 
     /**
@@ -106,7 +107,5 @@ class ListingPolicy
     public function forceDelete(User $user, Listing $listing)
     {
         return $user->id == $listing->by_user_id;
-
-        
     }
 }
