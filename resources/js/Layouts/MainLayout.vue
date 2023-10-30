@@ -4,19 +4,21 @@
 
     <div class="container mx-auto">
       <nav class="p-4 flex items-center justify-between">
-        <div class="text-lg font-medium">
-          <Link :href="route('listing.index')">Listings</Link>
-        </div>
         <div class="text-xl text-blue-600 dark:text-blue-300 font-bold text-center">
-          <Link :href="route('listing.index')">ESTATES</Link>
+          <Link href="/">EXE ESTATES</Link>
 
         </div>
+
+        <!-- <div class="text-lg font-medium">
+          <Link :href="route('listing.index')">Listings</Link>
+        </div> -->
         <div v-if="user" class="flex items-center gap-4">
           <Link
             class="text-gray-500 relative pr-2 py-2 text-lg"
             :href="route('notification.index')"
           >
-            🔔
+
+            <BellIcon class="h-6 w-6" aria-hidden="true" />
             <div v-if="notificationCount" class="absolute right-0 top-0 w-5 h-5 bg-red-700 dark:bg-red-400 text-white font-medium border border-white dark:border-gray-900 rounded-full text-xs text-center">
               {{ notificationCount }}
             </div>
@@ -48,6 +50,7 @@
 </template>
 
 <script setup>
+import { BellIcon} from '@heroicons/vue/24/outline'
 import { computed } from 'vue'
 import { Link, usePage } from '@inertiajs/inertia-vue3'
 

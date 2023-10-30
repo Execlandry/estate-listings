@@ -1,15 +1,12 @@
 <template>
   <form @submit.prevent="filter">
-    <div class="mb-8 mt-4 flex flex-wrap gap-2">
+
+    
+
+    <div class="mb-8 mt-4 flex flex-wrap gap-2 justify-center">
       <div class="flex flex-nowrap items-center">
-        <input v-model.number="filterForm.priceFrom"
-          type="text" placeholder="Price from"
-          class="input-filter-l w-28"
-        />
-        <input v-model.number="filterForm.priceTo"
-          type="text" placeholder="Price to" 
-          class="input-filter-r w-28"
-        />
+        <input v-model.number="filterForm.priceFrom" type="text" placeholder="Price from" class="input-filter-l w-28" />
+        <input v-model.number="filterForm.priceTo" type="text" placeholder="Price to" class="input-filter-r w-28" />
       </div>
 
       <div class="flex flex-nowrap items-center">
@@ -26,47 +23,51 @@
       </div>
 
       <div class="flex flex-nowrap items-center">
-        <input v-model.number="filterForm.areaFrom"
-          type="text" placeholder="Area from"
-          class="input-filter-l w-28"
-        />
-        <input v-model.number="filterForm.areaTo"
-          type="text" placeholder="Area to"
-          class="input-filter-r w-28"
-        />
+        <input v-model.number="filterForm.areaFrom" type="text" placeholder="Area from" class="input-filter-l w-28" />
+        <input v-model.number="filterForm.areaTo" type="text" placeholder="Area to" class="input-filter-r w-28" />
       </div>
-
-      <button type="submit" class="btn-normal">Filter</button>
-      <button type="reset" @click="clear">Clear</button>
     </div>
+
+    <div class="flex justify-center mb-4">
+      <div class= "flex flex-nowrap items-center ">
+        <button type="submit" class="btn-normal mr-2">Filter</button>
+        <button type="reset" @click="clear">Clear</button>
+      </div>
+    </div>
+    
+
+      
+    
   </form>
 </template>
 
 <script setup>
 import { useForm } from '@inertiajs/inertia-vue3';
 
-const props = defineProps({filters:Object})
+const props = defineProps({ filters: Object })
 
 const filterForm = useForm({
-  priceFrom:props.filters.priceFrom ?? null,
-  priceTo:props.filters.priceTo ?? null,
-  beds:props.filters.beds?? null,
-  baths:props.filters.baths ?? null,
-  areaFrom:props.filters.areaFrom ?? null,
-  areaTo:props.filters.areaTo ?? null,
+  priceFrom: props.filters.priceFrom ?? null,
+  priceTo: props.filters.priceTo ?? null,
+  beds: props.filters.beds ?? null,
+  baths: props.filters.baths ?? null,
+  areaFrom: props.filters.areaFrom ?? null,
+  areaTo: props.filters.areaTo ?? null,
 })
-const filter =()=>{
-  filterForm.get(route('listing.index'),{preserveState:true,
-  preserveScroll:true,})
+const filter = () => {
+  filterForm.get(route('listing.index'), {
+    preserveState: true,
+    preserveScroll: true,
+  })
 }
 
-const clear = () =>{
-  filterForm.priceFrom=null
-  filterForm.priceTo=null
-  filterForm.beds=null
-  filterForm.baths=null
-  filterForm.areaFrom=null
-  filterForm.areaTo=null
+const clear = () => {
+  filterForm.priceFrom = null
+  filterForm.priceTo = null
+  filterForm.beds = null
+  filterForm.baths = null
+  filterForm.areaFrom = null
+  filterForm.areaTo = null
   filter();
 }
 </script>

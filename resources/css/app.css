@@ -40,4 +40,8 @@
     .secondary-btn{
         @apply text-sm font-semibold leading-6 text-gray-900 dark:text-gray-300
     }
+
+    .intext-color{
+      @apply text-gray-800 dark:text-gray-50
+    }
 }
