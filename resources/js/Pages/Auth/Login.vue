@@ -18,6 +18,13 @@
           <Link :href="route('user-account.create')" class="text-sm text-gray-500">
           Need an account? Click here
           </Link>
+
+        </div>
+        <div class="flex justify-center">
+
+          <Link :href="route('password.request')" class="text-sm text-gray-500">
+          Forgot password?
+          </Link>
         </div>
       </div>
     </div>

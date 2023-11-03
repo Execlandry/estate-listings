@@ -1,5 +1,8 @@
 <?php
-
+use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
@@ -7,6 +10,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NotificationSeenController;
 // use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ListingOfferController;
 use App\Http\Controllers\RealtorListingAcceptOfferController;
@@ -50,6 +54,69 @@ Route::post('login', [AuthController::class, 'store'])
   ->name('login.store');
 Route::delete('logout', [AuthController::class, 'destroy'])
   ->name('logout');
+
+//forgot password
+// 1
+// Display password reset request form
+  Route::get('/forgot-password', function () {
+    return inertia('Auth/ForgotPassword');
+})->middleware('guest')->name('password.request');
+
+// 2
+// Handle password reset request
+Route::post('/forgot-password', function (Request $request) {
+  $request->validate(['email' => 'required|email']);
+
+  $status = Password::sendResetLink(
+      $request->only('email')
+  );
+
+  return $status === Password::RESET_LINK_SENT
+              ? back()->with(['status' => __($status)])
+              : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
+
+// 3
+// Display password reset form
+Route::get('/reset-password/{token}', function ($token) {
+  return inertia('Auth/ResetPassword', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+
+// 4
+// Handle password reset form submission
+Route::post('/reset-password', function (Request $request) {
+  $request->validate([
+      'token' => 'required',
+      'email' => 'required|email',
+      'password' => 'required|min:8|confirmed',
+  ]);
+   // Debugging output
+   \Log::info('Token: ' . $request->input('token'));
+   \Log::info('Email: ' . $request->input('email'));
+
+  $status = Password::reset(
+      $request->only('email', 'password', 'password_confirmation', 'token'),
+      function ($user, $password) {
+          $user->forceFill([
+              'password' => Hash::make($password)
+          ])->setRememberToken(Str::random(60));
+
+          $user->save();
+
+          //output debug
+          \Log::info('Remember Token: ' . $user->getRememberToken());
+          event(new PasswordReset($user));
+      }
+  );
+  \Log::info('Password Reset Status: ' . $status);
+
+  return $status === Password::PASSWORD_RESET
+              ? redirect()->route('login')->with('status', __($status))
+              : back()->withErrors(['email' => [__($status)]]);
+})->middleware('guest')->name('password.update');
+
+
+
 
   //verify route template config
   Route::get('/email/verify',function(){
