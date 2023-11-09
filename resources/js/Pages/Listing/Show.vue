@@ -62,6 +62,9 @@
       <MakeOffer v-if="user && !offerMade" :listing-id="listing.id" :price="listing.price"
         @offer-updated="offer = $event" />
       <OfferMade v-if="user && offerMade" :offer="offerMade" />
+
+      <Maps :location="[listing.latitude, listing.longitude]"/>
+      
     </div>
   </div>
 </template>
@@ -78,6 +81,7 @@ import { usePage } from '@inertiajs/inertia-vue3'
 import { computed } from 'vue'
 import OfferMade from './Show/Components/OfferMade.vue'
 import EmptyState from '@/Components/UI/EmptyState.vue'
+import Maps from '@/Components/Maps.vue'
 
 const interestRate = ref(2.5)
 const duration = ref(25)
