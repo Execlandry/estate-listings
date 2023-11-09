@@ -1,5 +1,5 @@
 <template>
-  <div class='ml-8 bg-gray-100 dark:bg-slate-900 shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>
+  <div class='ml-8 bg-gray-100 dark:bg-slate-900 shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>  <!--change this-->
 
     <!-- <Box v-if="listing.images.length" class="md:col-span-7 flex items-center">
       <div class="grid grid-cols-2 gap-1">
@@ -8,7 +8,7 @@
     </Box>
     <EmptyState v-else class="md:col-span-7 flex items-center">No images</EmptyState> -->
 
-  <Link :href="route('listing.show', { listing: listing.id })">
+    <Link :href="route('listing.show', { listing: listing.id })">
 
       <div class='p-3 flex flex-col gap-6 w-full'>
       <!-- <p class='truncate text-lg font-semibold text-slate-700'>

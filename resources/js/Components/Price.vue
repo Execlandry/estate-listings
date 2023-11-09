@@ -11,9 +11,9 @@
         })
 
         const formattedPrice = computed(
-            ()=>Number(props.price).toLocaleString('en-US',{
+            ()=>Number(props.price).toLocaleString('en-IN',{
                 style: 'currency',
-                currency: 'USD',
+                currency: 'INR',
                 maximumFractioDigits: 2,
 
             }),

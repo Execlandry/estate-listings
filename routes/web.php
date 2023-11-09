@@ -183,6 +183,8 @@ Route::prefix('realtor')
 
       //since we are modifying a data and not creating (put)
     Route::name('offer.accept')->put('offer/{offer}/accept',RealtorListingAcceptOfferController::class);
+    Route::name('offer.reject')->put('offer/{offer}/reject',RealtorListingAcceptOfferController::class);
+
 
     Route::resource('listing.image',RealtorListingImageController::class)->only(['create','store','destroy']);
  

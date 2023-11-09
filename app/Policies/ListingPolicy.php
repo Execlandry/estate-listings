@@ -39,8 +39,8 @@ class ListingPolicy
      */
     public function view(?User $user, Listing $listing)
     {
-        if ($listing->by_user_id == $user?->id) {
-            return true;
+        if ($user !== null && $listing->by_user_id == $user?->id) {
+            return false;
         }
 
         return $listing->sold_at == null;
