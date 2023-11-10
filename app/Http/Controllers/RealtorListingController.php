@@ -70,6 +70,9 @@ class RealtorListingController extends Controller
                 'street' => 'required',
                 'street_nr' => 'required|min:1|max:1000',
                 'price' => 'required|integer|min:1|max:20000000',
+                // 'latitude' => 'required',
+                // 'longitude' => 'required'
+
             ])
         );
 
@@ -99,6 +102,8 @@ class RealtorListingController extends Controller
                 'street' => 'required',
                 'street_nr' => 'required|min:1|max:1000',
                 'price' => 'required|integer|min:1|max:20000000',
+                // 'latitude' => 'required',
+                // 'longitude' => 'required'
             ])
         );
 
