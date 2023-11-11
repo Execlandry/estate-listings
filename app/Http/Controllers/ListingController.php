@@ -38,9 +38,10 @@ class ListingController extends Controller
 
                 'filters' => $filters,
                 'listings' => Listing::mostRecent()
+                    ->where('by_user_id', '!=', Auth::id()) 
                    ->filter($filters)
                    ->withoutSold()
-                    ->paginate(10) //returns a object
+                    ->paginate(12) //returns a object
                     ->withQueryString() //carries url filters to next pages
             ]
         );

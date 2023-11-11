@@ -12,6 +12,7 @@ class ListingPolicy
 
     public function before(?User $user, $ability)
     {
+        // for test@example.com only
         if ($user?->is_admin /*&& $ability == 'update' this allows admin to not delete anyother listing except his own*/) {
             return true;
         }
@@ -40,7 +41,7 @@ class ListingPolicy
     public function view(?User $user, Listing $listing)
     {
         if ($user !== null && $listing->by_user_id == $user?->id) {
-            return false;
+            return true;
         }
 
         return $listing->sold_at == null;
