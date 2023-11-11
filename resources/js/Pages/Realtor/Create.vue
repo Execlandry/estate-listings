@@ -59,13 +59,13 @@
           <div class="sm:col-span-2 sm:col-start-1">
             <label for="city" class="label">City</label>
             <div class="mt-2">
-              <input v-model="form.city" type="text" name="city" id="city" autocomplete="city" class="input" />
+              <input v-model="form.city" type="text" name="city" id="city" autocomplete="city" class="input" @change="calCoordinates"/>
               <div v-if="form.errors.city" class="input-error">
                 {{ form.errors.city }}
               </div>
-              <input type="text" id="display-lat" v-model="form.latitude" name="latitude" readonly class="text-black" />
-              <input type="text" id="display-lng" v-model="form.longitude" name="longitude" readonly class="text-black"/>
-          <button type="button" class="primary-btn" @click="calCoordinates">Save</button>
+              <input type="text" id="display-lat" v-model="form.latitude" name="latitude"  class="text-black" />
+              <input type="text" id="display-lng" v-model="form.longitude" name="longitude" class="text-black"/>
+         
 
             </div>
           </div>
@@ -73,8 +73,7 @@
           <div class="md:col-span-2">
             <label for="postal-code" class="label">ZIP / Postal code</label>
             <div class="mt-2">
-              <input v-model="form.code" type="text" name="postal-code" id="postal-code" autocomplete="postal-code"
-                class="input">
+              <input v-model="form.code" type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="input">
               <div v-if="form.errors.code" class="input-error">
                 {{ form.errors.code }}
               </div>
@@ -86,7 +85,7 @@
             <label for="street-address" class="label">Street address</label>
             <div class="mt-2">
               <input v-model="form.street" type="text" name="street-address" id="street-address"
-                autocomplete="street-address" class="input" />
+                autocomplete="street-address" class="input" @change="calCoordinates"/>
               <div v-if="form.errors.street" class="input-error">
                 {{ form.errors.street }}
               </div>
@@ -118,6 +117,7 @@
 <script setup>
 import { useForm } from '@inertiajs/inertia-vue3'
 
+// calCoordinates();
 const form = useForm({
   beds: 0,
   baths: 0,
@@ -130,34 +130,25 @@ const form = useForm({
   latitude:null,
   longitude:null
 })
-const create = async () => {
-  // calCoordinates();
+const create = () => {
   form.post(route('realtor.listing.store'));
 }
 
 function calCoordinates() {
-  var locationInputId = "city";
+  var locationInputIds = ["city", "street-address"];
   var lat = 0;
   var lng = 0;
-  geocodeLocation(locationInputId, (latLng) => {
-    console.log("lat" + latLng.lat);
-    console.log("lng" + latLng.lng);
-    
-    // document.addEventListener("DOMContentLoaded", function () {
-    var dispLt = document.getElementById("display-lat");
-    var dispLn = document.getElementById("display-lng");
-    dispLt.value = latLng.lat;
-    dispLn.value = latLng.lng;
-    // });
-  })
-
+  geocodeLocation(locationInputIds, (latLng) => {
+    form.latitude = latLng.lat;
+    form.longitude = latLng.lng;
+  });
 }
-function geocodeLocation(locationInputId, callback) {
-  var location = document.getElementById(locationInputId).value;
-  console.log(location);
-  if (location) {
-    // Use geocoding to get coordinates for the entered location
-    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + location)
+
+function geocodeLocation(locationInputIds, callback) {
+  var locations = locationInputIds.map(id => document.getElementById(id).value).join(" ");
+
+  if (locations.trim()) {
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locations)}`)
       .then(response => response.json())
       .then(data => {
         if (data.length > 0) {
@@ -165,7 +156,6 @@ function geocodeLocation(locationInputId, callback) {
           var lon = data[0].lon;
           var latLng = L.latLng(lat, lon);
           callback(latLng);
-          // callback(lat,lon);
         } else {
           alert("Location not found.");
         }
@@ -174,7 +164,7 @@ function geocodeLocation(locationInputId, callback) {
         console.error('Error:', error);
       });
   } else {
-    alert("Please enter a location.");
+    alert("Please enter at least one location.");
   }
 }
-</script> 
+</script>

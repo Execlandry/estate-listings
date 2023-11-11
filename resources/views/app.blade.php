@@ -15,9 +15,8 @@
 
 {{-- for dark mode --}}
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-300">
-    @inertia
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
-    <script src="{{ mix('/js/app.js') }}" defer></script>
+    @inertia
 </body>
 
 </html>
