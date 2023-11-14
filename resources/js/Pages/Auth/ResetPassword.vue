@@ -88,7 +88,7 @@ const submitForm = () => {
    <!-- this works with handling form but the post is not set in reset table  -->
   <div>
     <form @submit.prevent="submitForm">
-      <input type="text" name="token" v-model="form.token" />
+      <input type="hidden" name="token" v-model="form.token" />
 
       <label for="email">Email:</label>
       <input type="email" name="email" v-model="form.email" />
