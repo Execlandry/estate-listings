@@ -24,7 +24,7 @@ export default {
       map.value = L.map(map.value).setView(location, 13);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors',
+        // attribution: '&copy; OpenStreetMap contributors',
       }).addTo(map.value);
 
       L.marker(location).addTo(map.value);
