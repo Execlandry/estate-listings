@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col-reverse md:grid md:grid-cols-12 gap-4">
     
-    <Box v-if="listing.images.length" class="md:col-span-7 flex items-center">
+    <Box v-if="listing.images.length" class="md:col-span-7 flex h-fit">
       <div class="grid grid-cols-2 gap-1">
-        <img v-for="image in listing.images" :key="image.id" :src="image.src" />
+        <img v-for="image in listing.images" :key="image.id" :src="image.src" class="w-full h-full object-cover border-black border-4" />
       </div>
     </Box>
     <EmptyState v-else class="md:col-span-7 flex items-center">No images</EmptyState>
@@ -62,6 +62,9 @@
       <MakeOffer v-if="user && !offerMade" :listing-id="listing.id" :price="listing.price"
         @offer-updated="offer = $event" />
       <OfferMade v-if="user && offerMade" :offer="offerMade" />
+
+      <Maps :location="[listing.latitude, listing.longitude]"/>
+      
     </div>
   </div>
 </template>
@@ -78,6 +81,7 @@ import { usePage } from '@inertiajs/inertia-vue3'
 import { computed } from 'vue'
 import OfferMade from './Show/Components/OfferMade.vue'
 import EmptyState from '@/Components/UI/EmptyState.vue'
+import Maps from '@/Components/Maps.vue'
 
 const interestRate = ref(2.5)
 const duration = ref(25)

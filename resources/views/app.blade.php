@@ -7,6 +7,7 @@
 
     <title>Estates</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
     @routes
     @vite('resources/js/app.js')
     @inertiaHead
@@ -14,6 +15,7 @@
 
 {{-- for dark mode --}}
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-300">
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
     @inertia
 </body>
 

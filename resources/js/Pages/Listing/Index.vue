@@ -15,6 +15,7 @@
 import Listing from '@/Pages/Listing/Index/Components/Listing.vue'
 import Pagination from '@/Components/UI/Pagination.vue'
 import Filters from '@/Pages/Listing/Index/Components/Filters.vue'
+import EmptyState  from "@/Components/UI/EmptyState.vue";
 defineProps({
   listings: Object,
   filters: Object,

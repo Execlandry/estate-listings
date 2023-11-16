@@ -1,6 +1,6 @@
 <template>
   <Box>
-    <template #header>Make an Offer</template>
+    <template #header>Down Payment</template>
     <div>
       <form @submit.prevent="makeOffer">
         <input v-model.number="form.amount" type="text" class="input" />
